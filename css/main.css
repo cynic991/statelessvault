@@ -1,0 +1,247 @@
+/*** Stateless Vault by Andrea Guerini is licensed under 
+the Creative Commons Attribution 4.0 International License. 
+To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/. 
+Based on works by Maarten Billemont (https://github.com/Lyndir/MasterPassword/) 
+and by Tom Thorogood (https://github.com/tmthrgd/mpw-js). ***/
+
+
+/**** BASE STYLE ****/
+
+html { 														/* html selector selects the whole document */
+	background-color:   white;  		/* Page is white */
+}
+
+body {
+  clear:              both;  			/* No floating elements allowed on either the left or the right side */
+  font-family:        'Open Sans', sans-serif;  /* Priority to 'Open Sans' font, otherwise generic sans-serif font */
+  font-weight:        300;  			/* Standard weight is 400, bold is 700, 100 is the lightest, 900 is the boldest.*/
+  color:              #215272;		/* Text color is dark blue */
+  text-align:         center;			/* Centers the text in body element */
+	letter-spacing: 		1px;				/* More space between letters */
+  line-height: 				1.2;				/* Line-height of paragraph is higher than default value (1) */
+}
+
+p { 
+	margin:             10px;				/* 10 pixels of space around p element*/
+}
+
+#logo {
+  margin-top:         30px;				/* Logo lower: 30 pixels of space on the top margin */
+}
+
+h1, h2, h3 {
+  margin:             0;					/* No extra space around headings h1, h2 and h3 */
+}
+
+h1 {
+  margin-right:       5px;				/* Web App title has 5 pixels of extra space on right side and on left side */
+	margin left: 				5px;
+	font-size:          5em;				/* The em size unit is recommended by W3C. */
+																	/* 1em is equal to the current font size. */
+																	/* The default text size in browsers is 16 pixel*/
+																	/* Web App title will be 5 times h1 defualt size = 16px * 5 */
+  font-family:        'Gugi', monospace;	/* Priority to 'Gugi' font, otherwise generic monospace font */
+  color:              #337BA8;		/* Web App title is blue. */
+}
+
+h3 {
+  margin-bottom:      1em;      	/* default font-size is 16x=1em.
+																	/* Subheading h3 has 16 pixels (1*16px) of extra space on bottom margin.*/
+  font-size:          2em;				/* Font-size is 16px*2 */
+  color:              #337BA8;		/* Subheading is blue. */
+  font-weight:        300;				/* Subheading is lighter than standard weight (400) */
+	letter-spacing: 		3px;
+}
+
+a {
+  font: 							inherit;		/* Anchor elements inherits font properties from its parent element (p) */
+																	/* p element inherits from body element */
+  color: 							inherit;		/* Anchor elements inherits font properties from its parent element (p) */
+}
+
+.bold {
+	font-weight: 				bold;				/* font-weight is higher for .bold elements, so they are highlighted */
+}
+
+section {													/* section is father element of button, input, select and textarea */
+  font-size:          1.5em;			/* font size of section elements are 16px * 1.5 = 24 px */
+}																	/* This font-size will be inherited by all child elements */
+
+h2 {
+  margin-top:         2em;				/* h2 default font-size is 24px=1em. */
+																	/* h2 (IDENTIFICATION, GENERATE PASSWORD) has 48 pixels (2*24px) */
+																	/* of extra space on top margin. */
+  color:              #215272;		/* h2 are dark blue. */
+  font-weight:        200;				/* h2 are lighter than standard weight (400) */
+  font-family:        'Gugi', monospace;  /* Priority to 'Gugi' font, otherwise generic monospace font */
+}
+	
+input, select {										/* input fields (name, secret password, site and numeric value) */
+																	/* and type of password selection */
+	background-color:   rgba(123, 168, 202, 0.1);	/* 3rd color: background is light blue with very low opacity */
+  border:             2px solid #215272;	/* Borders are solid, 2px larger and dark blue */
+  border-radius:      2em;				/* The radius length to draw the rounded corner is 2em = 24px*2 */
+  width:              66%;				/* Input and select areas are 66% wide of total width. */
+  height:             2em;				/* Input and select areas are high 48px = 24px * 2 */
+  margin:             1em 0;			/* Top and bottom margins are 24px (1em), right and left margins are 0 */    
+  font:               inherit;		/* Font properties (style and size) are inherited from parent element:*/																																		/* section that is a child of body */
+  font-weight:        500;				/* Fonts are bolder than normal (400) */
+  color:              #337BA8;		/* Text color is blue */
+  text-align:         center;			/* Text is centered */
+	
+}
+	
+button {
+  background-color:   #337BA8;		/* Buttons (COPY and SHOW) are blue. */ 
+	border:             2px solid #337BA8; 	/* Borders are solid, 2px larger and blue for a flat style */
+  border-radius:      2em;				/* The radius length to draw the rounded corner is 2em = 24px*2 */
+  margin:             1em;				/* 1em=24px of extra space around each button element */  
+  font-family:        'Gugi', monospace;	/* Priority to 'Gugi' font, otherwise generic monospace font */
+  font-size:          1em;				/* Font-size is equal to 24px = 1em */
+  font-weight:        200;				/* Text buttons are lighter than standard weight (400) */
+  color:              white;			/* Text color is white. */
+  width:              15%;				/* Button area is wide as 15% of total width */
+  height:             2em;				/* Button area is high 48px = 24px * 2 */
+  cursor:             pointer;		/* The pointer on buttons suggests interactivity */
+	
+}
+
+textarea {																			/*textarea is where the generated password will appear */
+  background-color:   rgba(123, 168, 202, 0.1);	/* background is light blue with very low opacity */
+  border:             2px solid #215272; 				/* Borders are solid, 2px larger and dark blue */
+  border-radius:      2em;											/* The radius length to draw the rounded corner is 2em = 24px*2 */  	
+  color:              rgba(51, 123, 168, 0); 		/*Text color is blue with opacity equal to zero. 
+																						 		/* Password must be hidden. */
+  width:              66%;											/* textarea is wide as input and select area: 66% of total width */
+  height:             2em;											/* Height is equal to 48px = 24px * 2 */
+  font:          			inherit;									/* font properties are inherited from parent element: section */
+  margin:             1em 0;										/* Top and bottom margins are 24px (1em), right and left margins are 0 */    
+	text-align:         center;										/* Text is centered */
+}
+														
+select.parameter {								/* select.parameters are types of generated password */
+	width:              54%;				/* It's wide 54% of the whole width. */
+}
+
+input.parameter {									/* input.parameters are numeric values */
+  width:              12%;				/* It's wide 12% of the whole width. */
+}
+
+::placeholder { /* This is a non-standard selector for Chrome, Firefox, Opera, Safari 10.1+ */
+  color:            	rgba(123, 168, 202, 0.9);	/* Text color is the same as background but opacity is higher */
+  opacity:          	1; 												/* Firefox requires this property */
+  font:        				inherit;							  	/* Fontproperties are inherited from section that is child of body */
+}
+:-ms-input-placeholder { /* non-standard selector for Internet Explorer 10-11 */
+  color:              rgba(123, 168, 202, 0.9);	/* Text color is the same as background but opacity is higher */
+  font:               inherit;									/* Font properties are inherited from section that is child of body */
+}
+::-ms-input-placeholder { /* non-standard selector for Microsoft Edge */
+  color:              rgba(123, 168, 202, 0.9);	/* Font-style is the same as parent node: section that is child of body */
+  font:               inherit;									/* Font properties are inherited from section that is child of body */
+}
+
+#login {													
+  width:              230px;											/* login button is large 230px. */
+}
+
+#logout{																					/* logout button: different style to highlight function */
+	background-color: 	rgba(123, 168, 202, 0.1);		/* background is light blue with very low opacity */
+	border:             2px solid #215272;  				/* Borders are solid, 2px larger and dark blue */
+  border-radius:      2px;												/* The radius length to draw the rounded corner is 2px */
+  color:              #B22222;										/* Text is dark red */
+  margin-top:         4em;												/* Logout is in a lower position: margin is 24px*4 */
+}
+
+footer {
+  font-size:          0.7em;						/* Footer has the smallest caracter size of the document */
+	margin-top:         8em;							/* Its position is separeted from section's area. */
+	letter-spacing: 		0px;				/* More space between letters */
+  line-height: 				1;				/* Line-height of paragraph is higher than default value (1) */
+}
+
+
+/*** INTERACTIVE DESIGN using pseudo-classes***/
+button:hover {										/* :hover is used to select element when mouse is over them */
+	background-color: 	#215272;		/* During :hover buttons change color to dark blue */
+	border:            	2px solid #215272;	/* Borders become solid, 2px larger and dark blue */
+}
+
+#logout.highlight:hover {					/* #id.class:pseudo-class to select logout on hover */
+	color: 							red;				/* text is highlighted to underline function */
+}
+
+input:focus, select:focus, textarea:focus {	/* The :focus selector is allowed on elements that accept keyboard events */
+	box-shadow:         0 0 40px #215272;			/* On focus a dark blue shadow effect is activated */														
+}																						/* 0 0 means shadow is under the element's area. 
+																						/* 40px is blur radius: indistinct shadow direction */
+
+button:active	{															/* Buttons become active when you click on it. */
+	box-shadow:         0 0 40px #215272;			/* On active a dark blue shadow effect is activated */											
+}																						/* 0 0 means shadow is under the element's area. 
+																						/* 40px is blur radius: indistinct shadow direction */
+#error {
+  color:              #B22222;							/* Errors generated by JS are dark red */
+}
+
+/**** LAYOUT to show sections ****/
+/* section with class="active" is displayed. main.js will add and remove class="active" to section */
+/* elements to display the right section to user */
+section {																		
+    display:            none;				/* section GENERATE PASSWORD is not displayed on page's opening */
+}
+section.active {
+    display:            block;			/* section IDENTIFICATION is displayed on page's opening */
+}
+
+
+/*** Responsive Design using media queries***/
+/* It changes the style of selected elements to according browser window or device screen */
+/* Non-selected elements mantain base style properties */
+/* Under 500px is for smartphone screens */
+@media screen and (max-width: 500px){	
+	#logo { width: 220px; }							/* Logo has a fixed width (220px) to mantain proportions */
+  h1 { font-size: 3em;   }						/* h1 font is reduced 16px*3 */
+	h3 { font-size: 1.3em; }  					/* h3 subheading font is reduced 16px*1.3 */
+	h2 { font-size: 1.4em; } 						/* h2 titles' font is reduced 24px*1.4 */
+	p  { font-size: 0.9em; }  					/* paragraphs' font is reduced 16px*0.9 */
+	button { width: 80px; }							/* COPY and SHOW buttons have a fixed width */
+	#login { width: 170px; }						/* Login utton has a fixed width */
+	#logout {	width: 100px; }        		/* Logout button has a fixed width */
+	button { font-size: 0.8em;}					/* Buttons' font is reduced 24px*0.8 */
+  select.parameter { width: 73%; }		/* Type's password selection proportionally extended */
+  input.parameter { width: 17%; }			/* Numeric value parameter proportionally extended */
+  input, select { width: 90%; }				/* input and select areas proportionally extended */
+  textarea { width: 90%; }						/* textarea proportionally extended */
+}
+
+/* For tablet and medium format */
+@media screen and (min-width: 501px) and (max-width: 900px){  
+	#logo { width: 50%; }			/* Logo increases and decreases its width mantaining 50% of width */
+	h1 { font-size: 3.5em; }  					/* h1 font is reduced 16px*3.5 */
+	h3 { font-size: 1.6em; }  					/* h3 subheading font is reduced 16px*1.6 */
+	button { font-size: 0.9em; }        /* Buttons' font is reduced 24px*0.9 */
+	button { width: 110px; }						/* COPY, SHOW and LOGOUT buttons have a fixed width */
+	#login { width: 200px;}							/* Login button has a fixed width */
+}
+
+/* Larger screen or big browser window */
+@media screen and (min-width: 901px){		
+  #logo { width: 450px; }								/* Logo has a fixed width (450px) to mantain proportions */
+  button { width: 150px; }							/* Buttons have a fixed width */
+	#login { width: 220px;}								/* Login button has a fixed width */
+	/* to avoid input and select fields to be too large */
+  select.parameter { width: 44%; }			/* Type's password selection proportionally reduced */
+  input.parameter { width: 11%; }				/* Numeric value parameter proportionally extended */
+  input, select { width: 55%; }					/* input and select areas proportionally reduced */
+  textarea { width: 55%; }							/* textarea proportionally reduced */
+}
+
+/* Full screen or the biggest window */
+@media screen and (min-width: 1500px){	
+	/* to avoid input and select fields to be too large */
+	select.parameter { width: 41%; }			/* Type's password selection proportionally reduced */
+	input.parameter { width: 9%; }				/* Numeric value parameter proportionally extended */
+	input, select { width: 50%; }					/* input and select areas proportionally reduced */
+	textarea { width: 50%; }							/* textarea proportionally reduced */
+}

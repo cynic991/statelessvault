@@ -1,0 +1,284 @@
+		
+<!-- Stateless Vault by Andrea Guerini is licensed under 
+the Creative Commons Attribution 4.0 International License. 
+To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/. 
+Based on works by Maarten Billemont (https://github.com/Lyndir/MasterPassword/) 
+and by Tom Thorogood (https://github.com/tmthrgd/mpw-js). -->
+
+<!DOCTYPE html>
+<!-- To enable the application cache for an application, 
+you must include the manifest attribute in the <html> element in your application's pages -->
+<html manifest="statelessVault.appcache">
+	
+	<!-- <head> is a container for metadata -->
+	<head>
+		<!--  The following 2 meta tags *must* come first in the <head> -->
+		<!-- All characters within the UTF-8 space are rendered correctly. -->
+    <meta charset="utf-8"> 		
+		<!--To ensure proper document rendering. -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 		
+		<!-- Document's title -->
+    <title>Stateless Vault: HTML5 password wallet</title> 
+		<!-- Document's Author -->
+		<meta name="author" content="Andrea Guerini mat. 883756">
+		<!-- Short description of the document -->
+    <meta name="description" content="Stateless Vault è un progetto sviluppato per il corso di 
+					Programmazione Web e Mobile, Prof.Paolo Ceravolo, 
+					Università degli Studi di Milano, 2018/2019." />
+		<!-- Force IE to use latest rendering engine: 
+				 the best'll be when Edge based on Chromium will be released -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Name of web application (only should be used if the website is used as an app) -->
+		<meta name="application-name" content="Stateless Vault">
+		<!-- Links to an external CSS file -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi|Open+Sans%26display=swap">
+    <link rel="stylesheet" href="css/explanation.css">
+	  <!-- Refers to a copyright statement that applies to the link's context -->
+		<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+		<!-- Apple iOS Launch Icon -->
+	  <link rel="apple-touch-icon" href="img/appicon.png">
+		<!-- Launch Icon Title -->
+		<meta name="apple-mobile-web-app-title" content="Stateless Vault">
+		<!-- Enable standalone (full-screen) mode -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- Browser/Android Launch Icon -->
+		<link rel="icon" href="img/appicon.png"/>
+		<!-- Color for Chrome's toolbar -->
+		<meta name="theme-color" content="#215272">
+		<!-- Add to home screen -->
+		<meta name="mobile-web-app-capable" content="yes">		
+	</head>
+	
+	
+	<!-- body's content -->
+  <body>
+		
+		<!-- Header represents a container for Stateless Vault's introductory content -->
+    <header>   
+			<div class="header">
+				<img id="logo" src="img/logo.svg" alt="Logo di Stateless Vault">
+				<!-- Web Application's title and logo-->
+      	<h1 id="title">Stateless Vault</h1>
+				<!-- Web Application's subheading -->
+      	<h3> HTML5 password wallet </h3>
+			</div>
+		</header>
+		
+		<!-- Description of implemented cryptographic algorithms -->
+		<section id="cryptoAlgorithms">
+			<h2> CRYPTOGRAPHIC ALGORITHMS </h2>
+			<h4> Identity </h4>
+      <section class="explanation">Your identity is defined by your unique secret password. This unlocks all your doors. 
+					Your input [name] is necessary for identification. Your input [secret password] is a prove of knowledge
+					to authenticate your identity and represents the key. Together, they create a cryptographic identifier 
+					that is unique to every authenticated user. We call this union Master Criptographic Key. The SCRYPT 
+					cryptographic function is employed to derive a 64-byte Master Cryptographic Key
+					from the user’s [name] and [secret password] using a fixed set of parameters. Fixed parameters 
+					are: N =  32768, r = 8 and p = 2 and scope (see Key scopes and templates) are chosen according 
+					to time and resources consumption.			
+			</p>
+      	<div class="cryptoCode">
+					masterKey = SCRYPT( key, seed, N, r, p, dkLen ) <br>
+					key = [secret password] <br>
+					seed = scope . LEN([name]) . [name] <br>
+					N = 32768 <br>
+					r = 8 <br>
+					p = 2 <br>
+					dkLen = 64
+				</div>
+			<p class="explanation">To know more about SCRYPT Criptographic Algorithm see <a href="https://www.tarsnap.com/scrypt/scrypt.pdf"> Stronger Key Derivation Via Sequential Memory-Hard Functions. </a>
+			</p>
+			<h4> Site key </h4>
+				<p class="explanation">Your site key is a derivative from your secret key when it
+				is used to unlock the door to a specific site. Your site key is the result of three components: your [site name], your 		
+				Master Cryprographic Key (see Identity) and your [site counter]. Your Master Cryptographic Key establishes a unique string of bits
+				to create your site passwords. The site counter ensures you can easily create new password for the site if that password were 
+				compromised. Together, they create a cryptographic identifier that is unique to your account at a given site. The HMAC-SHA-256 
+				cryptographic function to derive a 64-byte Cryptographic Site Key from the site name and Master Cryptographic Key scoped to 
+				a given counter value.
+			</p>
+				<div class="cryptoCode">
+				siteKey = HMAC-SHA-256 (key, seed)<br>
+				key = [master key]<br>
+				seed = scope . LEN([site name]) . [site name] . [counter]
+				</div>
+			<p class="explanation">
+		To know more about HMAC-SHA-256 see <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf"> Secure Hash Standard </a> and <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.198-1.pdf">The Keyed-Hash Message Authentication Code.</a>
+			</p>
+		<h4> Site password </h4>
+			<p class="explanation">Your site password is an identifier derived from your site key in compilance with the 
+					site password policy and user's will. The purpose of this step is to render the site's cryptographic key
+					into a format that the site password input will accept and user can be relaxed about strength against
+					dictonary or brute force attack. Stateless Vault declares ten site password formats and uses pre-defined 
+					password "templates" to render site key legible composed by letters, numbers or symbols. The template is 
+					resolved to generate password from site key's first byte. When the selected template is selected, it is 
+					used to translate site key bytes into password characters. The result is a site password in the form defined 
+					by the site template scoped to our site key. <span class="bold">Finally the generated password can be used 
+					to authenticate user for his account at the given site</span>. 
+			</p>
+				<div class="cryptoCode"> template = templates [ siteKey[0] % LEN( templates ) ]<br><br>
+					for i in 0..LEN( template )<br>
+					passChars = templateChars [ template[i] ]<br>
+					passWord[i] = passChars[ site key[i+1] % LEN( passChars )]<br>
+				</div>	
+			<h4> Key scopes and templates </h4>
+				<p class="explanation">Stateless Vault algorithm defines several key scopes. 
+					These scopes are used to scope the key generation to a specific purpose. 
+					These purpose are defined:
+				</p>
+					<ol>
+						<li>The authentication scope is used when genrating a key that is used for
+							authenticating the user, such as a password.  
+							<div class="cryptoCode"> Authentication scope identifier = it.unimi.statelessvault </div>
+						</li>
+						<li>The identification scope is used when generating a key that is 
+							intended for the purpose of identifying the user. 
+							<div class="cryptoCode"> Identification scope identifier = it.unimi.statelessvault.login </div>
+						</li>
+						<li>The recovery scope is used for generating fall-back identifiers 
+							for use in access recovery when the primary authentication mechanism has failed.
+							<div class="cryptoCode"> Recovery scope identifier = it.unimi.statelessvault.answer </div>
+						</li>
+					</ol>
+				<p class="explanation">
+					Stateless Vault defines ten password templates to make a best-effort attempt at generating 
+					site passwords that adheres to accepted formats by websites and ensures memorability of 
+					chosen format, while also keeping its output entropy as high as possible under
+					the constraints. 
+				</p>
+					<div class="cryptoCode">
+					USER.templates = {<br>
+  // 32 characters: letters, numbers and symbols<br>
+	maximum: [<br>
+		"xnoxxnxAzxzxxxzxxxxAxxxnxzxozxxz",<br>
+		"xxxxnxxxxoxxxxxxxaxxxxAnxxxxnozx",<br>
+    "xxxzxzaxxxxxxAxxxzxxxzxxxoxxxnaz",<br>
+    "xoxxxxxnxAxzxxzxxxxnoxaxxxaxxxxz",<br>
+    "xxxxxoxzxzxxxCxxxzxoxxxAxxxoxzxa"<br>
+	],<br>
+  // 20 characters: letters, numbers and symbols<br>
+	long: [<br>
+		"avcxvnoCxxvcvaxvcvxx",<br>
+		"avxcvCxvxcvnxoCxvcvx",<br>
+		"axvcvCvcxvCxvxcvxnxo",<br>
+		"avcxcnoxCvcxxxvCxvcv",<br>
+		"avxccCxxvcvnoCxxvxcv",<br>
+		"avcxcxCvcxvCxvcvnxxo",<br>
+		"avcvnoCvcxxxcCvcvxxx",<br>
+		"avxcvCvxxxccnoxCxvcv",<br>
+		"axxvcvxCvccCxvcvxxno",<br>
+		"avcxvnxoxCxvcvxxCvcc",<br>
+		"axvxcxvxCxvcvnxoCvcc",<br>
+		"avcvxCvcxxvxCvccxxno",<br>
+		"avccnoCvxcxcxCxvxcxv",<br>
+		"axvxccCvccnxxoxxCvcv",<br>
+		"avccCxxvccxxCvcxxvno",<br>
+		"avcxxvnoxxCvccxxCvcc",<br>
+		"avcxxvCvxzccnoCxxvcc",<br>
+		"axvcvCvcxcxxCvccnoxx",<br>
+		"axxvccnoxCvxcvCvcxxc",<br>
+		"avxccCxxxvcvxnoCxxvc",<br>
+		"avcxcCvxcxxvCvxccxxn"<br>
+	],<br>
+  // 12 characters: letters, numbers and symbols<br>
+	medium: [<br>
+		"CacnoxxxxCvc",<br>
+		"CacCxxxxvcno",<br>
+    "CaxxoxCnnxxx"<br>
+	],<br>
+  // 8 characters: letters, numbers and symbols<br>
+  light: [<br>
+    "zvnanona",<br>
+    "zVnCaCan",<br>
+    "znoaCcCo"<br>
+  ],<br>
+  // 8 characters: letters and numbers<br>
+	basic: [<br>
+		"aaanaaan",<br>
+		"aannaaan",<br>
+		"aaannaaa"<br>
+	],<br>
+  // 4 characters: letters and numbers<br>
+	short: [<br>
+		"Cvcn",<br>
+    "NCnc",<br>
+    "xnCc",<br>
+    "mcCa"<br>
+	],<br>
+  // 4 numbers<br>
+	pin: [<br>
+		"nnnn",<br>
+    "nNnN",<br>
+    "mnNm",<br>
+    "nmmN"<br>
+	],<br>
+  // 6 numbers<br>
+  pin6: [<br>
+    "nmnNnN",<br>
+    "nnnnnn",<br>
+    "NnNmnn",<br>
+    "mNnmmN"<br>
+  ],<br>
+  // 8 numbers<br>
+  pin8: [<br>
+    "mNnmNnm",<br>
+    "NnnmNnm",<br>
+    "nmnNnNm",<br>
+    "nnnnnnn"<br>
+  ],<br>
+	phrase: [<br>
+		"cvcc cvc cvccvcv cvc",<br>
+		"cvc cvccvcvcv cvcv",<br>
+		"cv cvccv cvc cvcvccv"<br>
+	]<br>
+};<br>
+					</div>
+					<p class="explanation">
+					Stateless Vault template is a string of characters, where each character identifies a certain character class. As such, the template spesificies that the output password should be formed by substituing each of the template's character class charcters by a chosen character from character class.
+					</p>
+					<div class="cryptoCode">
+// The password character mapping<br>
+// c in template becomes bcdfghjklmnpqrstvwxyz<br>
+USER.passchars = {<br>
+	V: "AEIOU",<br>
+	C: "BCDFGHJKLMNPQRSTVWXYZ",<br>
+	v: "aeiou",<br>
+	c: "bcdfghjklmnpqrstvwxyz",<br>
+	A: "AEIOUBCDFGHJKLMNPQRSTVWXYZ",<br>
+	a: "AEIOUaeiouBCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz",<br>
+  N: "01234",<br>
+  m: "56789",<br>
+	n: "0123456789",<br>
+	o: "@&%?,=[]_:-+*$£#!'^;()/.\|{}&lt&gt°",<br>
+  z: "AEIOUaeiouBCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz0123456789",<br>
+	x: "AEIOUaeiouBCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz0123456789@&%?,=[]_:-+*$£#!'^;()/.\|{}&lt&gt°",<br>
+						}
+					</div>
+			</section>
+		
+			<p id="return">
+			<br><br>
+			Return to <a href="index.html">Stateless Vault web application.</a>
+			</p>
+	
+		<!-- <footer> contains authorship information, copyright information and credits information. -->
+    <footer>
+			<!-- This is an automatic pre-formatted message by creative commons. CC logo is an anchor to CC license. -->
+    	<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" 
+				 style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br>
+			<!-- Metadata license information about Stateless Vault work -->
+			<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Stateless Vault</span> by 
+			<a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/cynic991/statelessvault" property="cc:attributionName" 
+				 rel="cc:attributionURL">Andrea Guerini</a> is licensed under a <a rel="license" 
+				 href="https://creativecommons.org/licenses/by/4.0/">
+				 Creative Commons Attribution 4.0 International License</a><br>
+			<!-- Credits -->
+				Based on works by <a xmlns:dct="http://purl.org/dc/terms/" href="https://lhunath.com/" 
+														 rel="dct:source">Marteen Billemont</a> and 
+													<a xmlns:dct="http://purl.org/dc/terms/" href="https://tomthorogood.uk/" 
+														 rel="dct:source">Tom Thorogood</a>.
+			Please, before using Stateless Vault web application, read <a href="disclaimer.html">our disclaimer and privacy policy</a>.
+		</footer>
+		
+	</body>
+</html>

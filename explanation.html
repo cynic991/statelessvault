@@ -1,0 +1,178 @@
+<!-- Stateless Vault by Andrea Guerini is licensed under 
+the Creative Commons Attribution 4.0 International License. 
+To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/. 
+Based on works by Maarten Billemont (https://github.com/Lyndir/MasterPassword/) 
+and by Tom Thorogood (https://github.com/tmthrgd/mpw-js). -->
+
+<!DOCTYPE html>
+<!-- To enable the application cache for an application, 
+you must include the manifest attribute in the <html> element in your application's pages -->
+<html manifest="statelessVault.appcache">
+	
+	<!-- <head> is a container for metadata -->
+	<head>
+		<!--  The following 2 meta tags *must* come first in the <head> -->
+		<!-- All characters within the UTF-8 space are rendered correctly. -->
+    <meta charset="utf-8"> 		
+		<!--To ensure proper document rendering. -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 		
+		<!-- Document's title -->
+    <title>Stateless Vault: HTML5 password wallet</title> 
+		<!-- Document's Author -->
+		<meta name="author" content="Andrea Guerini mat. 883756">
+		<!-- Short description of the document -->
+    <meta name="description" content="Stateless Vault è un progetto sviluppato per il corso di 
+					Programmazione Web e Mobile, Prof.Paolo Ceravolo, 
+					Università degli Studi di Milano, 2018/2019." />
+		<!-- Force IE to use latest rendering engine: 
+				 the best'll be when Edge based on Chromium will be released -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Name of web application (only should be used if the website is used as an app) -->
+		<meta name="application-name" content="Stateless Vault">
+		<!-- Links to an external CSS file -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi|Open+Sans%26display=swap">
+    <link rel="stylesheet" href="css/explanation.css">
+	  <!-- Refers to a copyright statement that applies to the link's context -->
+		<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+		<!-- Apple iOS Launch Icon -->
+	  <link rel="apple-touch-icon" href="img/appicon.png">
+		<!-- Launch Icon Title -->
+		<meta name="apple-mobile-web-app-title" content="Stateless Vault">
+		<!-- Enable standalone (full-screen) mode -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- Browser/Android Launch Icon -->
+		<link rel="icon" href="img/appicon.png"/>
+		<!-- Color for Chrome's toolbar -->
+		<meta name="theme-color" content="#215272">
+		<!-- Add to home screen -->
+		<meta name="mobile-web-app-capable" content="yes">		
+	</head>
+	
+	
+	<!-- body's content -->
+  <body>
+		
+		<!-- Header represents a container for Stateless Vault's introductory content -->
+    <header>   
+			<div class="header">
+				<img id="logo" src="img/logo.svg" alt="Logo di Stateless Vault">
+				<!-- Web Application's title and logo-->
+      	<h1 id="title">Stateless Vault</h1>
+				<!-- Web Application's subheading -->
+      	<h3> HTML5 password wallet </h3>
+			</div>
+		</header>
+		
+		<!--This section explains key principles. -->
+		<section id="philosophy">
+			<h2> STATELESSNESS AND RESPONSABILITY </h2>
+      <p class="explanation">Stateless Vault is a password wallet that generates passwords locally.
+				Key principles of Stateless Vault are statelessness and responsability. There's no real 
+				encrypted vault, so there's no sign in or login and personal data, like your name or your 		
+				passwords, are not sent or stored to any server.
+				The name Stateless Vault is an <span class="bold" > oxymoron </span> because in real 
+				life every kind of vault has a state. State is the technical term for "what needs to be saved".
+				Your storage support or a cloud won't have an encrypted file and they won't manage encrypted
+				communication over the internet. So vulnerable surface is reduced and risks upon state protection disappear.
+				Breaking your hard drive, losing your device or breaching against your cloud provider will not affect
+				your passwords.</p>
+			<p class="explanation">But warning, user is totally responsible for management of his passwords. 
+				In fact stateless operations imply that an algorithm can give you what you need based on nothing 
+				more than input you can give. Input information are determinant to calculate always the same 
+				expected generated passwords. <span class="bold" > Don't forget the following input information. </span>
+			</p>
+		</section>
+		
+		<!-- This section explains how it works. -->
+		<section id="howItWorks">
+			<h2>INPUT INFORMATION </h2>
+      	<p class="explanation"> 
+					  Stateless Vault requires three pieces of information that user must remember. 
+					The following rules are recommended.
+				</p>
+				<!-- Full name, secret password and site name. Rules for a correct use -->
+				<ol>
+					<li> First information is <span class="bold" > your full name</span>, 
+							 as it's written on your ID card or passport. This information could be exposed. 
+							 The strength of the encryption is not based on it, but it's necessary for calculation.
+					</li>
+					<li> Second information is <span class="bold" >a unique, personal and secret password </span>. 
+							 This information must be rembered without saving it or writing it anywhere. A good 
+							 secret password could be a nonsense phrase. The strength of Stateless Vault generation 
+							 process is based on it. Take your time for thinking a unique, easy to remember and strong secret password.
+					</li> 
+					<li> Third information is about <span class="bold"> where you need to be authenticated</span>. 
+							 It could be the URI where you want to login, it could be site's name of the service, 
+							 it could be the name of the service itself, it could be the name of a physical device. 
+							 It's up to you. Our suggestion: choose a way for all your generated password and mantain 
+							 it beacause you must remember it. 
+					</li>
+					<li> Optional fourth information: a<span class="bold"> numeric value </span> between 1 and 100. 
+							 This number allows user to change generated password. Stateless Vault shows a counter 
+							 to input this numeric value and the default value is 1. User should increase default value
+							 when he wants to modify generated password only (for exemple, after a fixed period of time) 
+							 without modifying his unique secret password. The site counter ensures you can easily create 
+							 new password for the site if that password were compromised.
+					</li>
+				</ol>
+			<p class="explanation"> 
+			Thanks to these information you'll be always able to generate the same passwords because Stateless Vault 
+			doesn't store any data about your name, your secret passwords or your sites. It's based on <span class="bold">
+			mathematics</span>. An addition, for example 1 + 2 + 3, will always give the same result, in our example 6. 
+			You can try it on every calculator and it will be 6 every time. At the same way, Stateless Vault uses input 
+			information to calculate always the same generated passwords. Every working browser (except Internet Explorer, 
+			Opera Mini and current version of Microsoft Edge) will produce your passwords.
+			</p>
+			<p>
+			Do you want to know more about Cryptograpghic Algorithms? Go to <a href="algorithm.html"> this section </a>.
+			</p>
+		</section>
+		
+		<!-- This section explains lightness and off-line use -->
+		<section id="lightnessOffline">
+			<h2> LIGHTNESS AND OFF-LINE USE </h2>
+      	<p class="explanation"> 
+					Stateless Vault uses your <span class="bold">Application Cache (AppCache) </span> to run its web 
+					application offline. So Stateless Vault will be loaded and work correctly even if users click 
+					the refresh button when they are offline. There are some advantages: offline passwords recovering, 
+					speed and reduced server load. After your first connection to the web application, you'll be able to 
+					calculate your generated passwords every time you want on the same browser regardless you are online or offline. <br>
+					Stateless Vault is <span class="bold"> light </span> because there are no personal data to store. 
+					In your Application Cache Stateless Vault will occupy no more than 300 KB. This is suitable even for 
+					device with small storage capacity.
+					</p>
+				<p class="explanation">
+						Moreover, you can also add this web application to your home screen, as a standalone web app. Discover 
+						<a href="https://www.howtogeek.com/196087/how-to-add-websites-to-the-home-screen-on-any-smartphone-or-tablet/">
+						how to do it</a>. This is a easy way to access Stateless Vault directly from your smartphone or desktop without 
+						opening your browser, but this is not a real app. In this case you won't be able to access Stateless Vault 
+						offline. It's just a shortcut. Offline use works only on web browsers.
+				</p>					
+		</section>
+	
+	<p>
+			<br><br>
+			Return to <a href="index.html">Stateless Vault web application.</a>
+		</p>
+	
+		<!-- <footer> contains authorship information, copyright information and credits information. -->
+    <footer>
+			<!-- This is an automatic pre-formatted message by creative commons. CC logo is an anchor to CC license. -->
+    	<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" 
+				 style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br>
+			<!-- Metadata license information about Stateless Vault work -->
+			<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Stateless Vault</span> by 
+			<a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/cynic991/statelessvault" 
+				 property="cc:attributionName" rel="cc:attributionURL">Andrea Guerini</a> is licensed under a <a rel="license" 
+				 href="https://creativecommons.org/licenses/by/4.0/">
+				 Creative Commons Attribution 4.0 International License</a><br>
+			<!-- Credits -->
+				Based on works by <a xmlns:dct="http://purl.org/dc/terms/" href="https://lhunath.com/" 
+														 rel="dct:source">Marteen Billemont</a> and 
+													<a xmlns:dct="http://purl.org/dc/terms/" href="https://tomthorogood.uk/" 
+														 rel="dct:source">Tom Thorogood</a>.
+			Please, before using Stateless Vault web application, read <a href="disclaimer.html">our disclaimer and privacy policy</a>.
+		</footer>
+		
+	</body>
+</html>
