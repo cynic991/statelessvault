@@ -75,7 +75,7 @@ Recovery scope identifier = it.unimi.statelessvault.answer
 Stateless Vault defines ten password templates to make a best-effort attempt at generating site passwords that adheres to accepted formats by websites and ensures memorability of chosen format, while also keeping its output entropy as high as possible under the constraints.
 
 USER.templates = {
-// 32 characters: letters, numbers and symbols
+
 maximum: [
 "xnoxxnxAzxzxxxzxxxxAxxxnxzxozxxz",
 "xxxxnxxxxoxxxxxxxaxxxxAnxxxxnozx",
@@ -83,7 +83,7 @@ maximum: [
 "xoxxxxxnxAxzxxzxxxxnoxaxxxaxxxxz",
 "xxxxxoxzxzxxxCxxxzxoxxxAxxxoxzxa"
 ],
-// 20 characters: letters, numbers and symbols
+
 long: [
 "avcxvnoCxxvcvaxvcvxx",
 "avxcvCxvxcvnxoCxvcvx",
@@ -107,46 +107,46 @@ long: [
 "avxccCxxxvcvxnoCxxvc",
 "avcxcCvxcxxvCvxccxxn"
 ],
-// 12 characters: letters, numbers and symbols
+
 medium: [
 "CacnoxxxxCvc",
 "CacCxxxxvcno",
 "CaxxoxCnnxxx"
 ],
-// 8 characters: letters, numbers and symbols
+
 light: [
 "zvnanona",
 "zVnCaCan",
 "znoaCcCo"
 ],
-// 8 characters: letters and numbers
+
 basic: [
 "aaanaaan",
 "aannaaan",
 "aaannaaa"
 ],
-// 4 characters: letters and numbers
+
 short: [
 "Cvcn",
 "NCnc",
 "xnCc",
 "mcCa"
 ],
-// 4 numbers
+
 pin: [
 "nnnn",
 "nNnN",
 "mnNm",
 "nmmN"
 ],
-// 6 numbers
+
 pin6: [
 "nmnNnN",
 "nnnnnn",
 "NnNmnn",
 "mNnmmN"
 ],
-// 8 numbers
+
 pin8: [
 "mNnmNnm",
 "NnnmNnm",
@@ -159,10 +159,9 @@ phrase: [
 "cv cvccv cvc cvcvccv"
 ]
 };
+
 Stateless Vault template is a string of characters, where each character identifies a certain character class. As such, the template spesificies that the output password should be formed by substituing each of the template's character class charcters by a chosen character from character class.
 
-// The password character mapping
-// c in template becomes bcdfghjklmnpqrstvwxyz
 USER.passchars = {
 V: "AEIOU",
 C: "BCDFGHJKLMNPQRSTVWXYZ",
