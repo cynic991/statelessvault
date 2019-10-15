@@ -322,7 +322,7 @@ USER.textEncoder = new TextEncoder;
 USER.NS = "it.unimi.statelessvault";
 
 // The namespaces used in calculateSeed
-USER.PasswordNS = "it.unimi.statelessvault";
+USER.PasswordNS = "it.unimi.statelessvault.login";
 USER.AnswerNS   = "it.unimi.statelessvault.answer";
 
 // The templates that passwords may be created from
