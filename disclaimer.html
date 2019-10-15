@@ -1,0 +1,120 @@
+<!-- Stateless Vault by Andrea Guerini is licensed under 
+the Creative Commons Attribution 4.0 International License. 
+To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/. 
+Based on works by Maarten Billemont (https://github.com/Lyndir/MasterPassword/) 
+and by Tom Thorogood (https://github.com/tmthrgd/mpw-js). -->
+
+<!DOCTYPE html>
+<!-- To enable the application cache for an application, 
+you must include the manifest attribute in the <html> element in your application's pages -->
+<html lang="en" manifest="statelessVault.appcache">
+	
+	<!-- <head> is a container for metadata -->
+	<head>
+		<!--  The following 2 meta tags *must* come first in the <head> -->
+		<!-- All characters within the UTF-8 space are rendered correctly. -->
+    <meta charset="utf-8"> 		
+		<!--To ensure proper document rendering. -->
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 		
+		<!-- Document's title -->
+    <title>Stateless Vault: HTML5 password wallet</title> 
+		<!-- Document's Author -->
+		<meta name="author" content="Andrea Guerini mat. 883756">
+		<!-- Short description of the document -->
+    <meta name="description" content="Stateless Vault è un progetto sviluppato per il corso di 
+					Programmazione Web e Mobile, Prof.Paolo Ceravolo, 
+					Università degli Studi di Milano, 2018/2019." />
+		<!-- Force IE to use latest rendering engine: 
+				 the best'll be when Edge based on Chromium will be released -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Name of web application (only should be used if the website is used as an app) -->
+		<meta name="application-name" content="Stateless Vault">
+		<!-- Links to an external CSS file -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi|Open+Sans%26display=swap">
+    <link rel="stylesheet" href="css/explanation.css">
+	  <!-- Refers to a copyright statement that applies to the link's context -->
+		<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+		<!-- Apple iOS Launch Icon -->
+	  <link rel="apple-touch-icon" href="img/appicon.png">
+		<!-- Launch Icon Title -->
+		<meta name="apple-mobile-web-app-title" content="Stateless Vault">
+		<!-- Enable standalone (full-screen) mode -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- Browser/Android Launch Icon -->
+		<link rel="icon" href="img/appicon.png"/>
+		<!-- Color for Chrome's toolbar -->
+		<meta name="theme-color" content="#215272">
+		<!-- Add to home screen -->
+		<meta name="mobile-web-app-capable" content="yes">		
+	</head>
+	
+	
+	<!-- body's content -->
+  <body>
+		
+		<!-- Header represents a container for Stateless Vault's introductory content -->
+    <header>   
+			<div class="header">
+				<img id="logo" src="img/logo.svg" alt="Logo di Stateless Vault">
+				<!-- Web Application's title and logo-->
+      	<h1 id="title">Stateless Vault</h1>
+				<!-- Web Application's subheading -->
+      	<h3> HTML5 password wallet </h3>
+			</div>
+		</header>
+		
+		<section id="disclaimer">
+			<p>This project was born for academic purposes and it was developed to accomplish Mobile and Web Programming course. Its author is a student of Computer and Network Security, Bachelor Level, University of Milan. If you require any more information or have any questions about our site's disclaimer or privacy policy, 
+				 please feel free to contact its author by email at andrea.guerini1@studenti.unimi.it.  </p>
+			<h2>Disclaimers for statelessvault.netsons.org</h2>
+					<p>All the information on this website - https://statelessvault.netsons.org - is published in good faith and for general information purpose only. statelessvault.netsons.org does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (statelessvault.netsons.org), is strictly at your own risk. statelessvault.netsons.org will not be liable for any losses and/or damages in connection with the use of our website. Our Disclaimer was generated with the help of the <a href="https://www.disclaimergenerator.net/">Disclaimer Generator</a> and the <a href="https://www.termsandcondiitionssample.com">Terms and Conditions Template</a>.
+					</p>
+					<p>From our website, you can visit other websites by following hyperlinks to such external sites. While we strive to provide only quality links to useful and ethical websites, we have no control over the content and nature of these sites. These links to other websites do not imply a recommendation for all the content found on these sites. Site owners and content may change without notice and may occur before we have the opportunity to remove a link which may have gone 'bad'.
+					</p>
+					<p>Please be also aware that when you leave our website, other sites may have different privacy policies and terms which are beyond our control. Please be sure to check the Privacy Policies of these sites as well as their "Terms of Service" before engaging in any business or uploading any information.
+					</p>
+				<h4>Consent</h4>
+					<p>By using our website, you hereby consent to our disclaimer and agree to its terms.</p>
+				<h4>Update</h4>
+					<p>Should we update, amend or make any changes to this document, those changes will be prominently posted here.     					</p>
+			<h2>Privacy Policy for Stateless Vault</h2>
+
+<p>At statelessvault.netsons.org, accessible from https://statelessvault.netsons.org, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by statelessvault.netsons.org and how we use it.</p>
+			
+			<h4>Cookies</h4>
+
+<p>Like any other website, statelessvault.netsons.org uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+
+			<h4>Log Files</h4>
+<p>statelessvault.netsons.org follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</p>
+			<h4>Online Privacy Policy Only</h4>
+
+<p>Our Privacy Policy created at GDPRPrivacyPolicy.net applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in statelessvault.netsons.org. This policy is not applicable to any information collected offline or via channels other than this website. <a href="https://gdprprivacypolicy.net">Our GDPR Privacy Policy</a> was generated from the GDPR Privacy Policy Generator.</p>
+				<h4>Consent</h4>
+
+<p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+			
+		</section>
+		<p>
+			<br><br>
+			Return to <a href="index.html">Stateless Vault web application.</a>
+		</p>
+		
+		<!-- <footer> contains authorship information, copyright information and credits information. -->
+    <footer>
+			<!-- This is an automatic pre-formatted message by creative commons. CC logo is an anchor to CC license. -->
+    	<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" 
+				 src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br>
+			<!-- Metadata license information about Stateless Vault work -->
+			<span>Stateless Vault</span> by 
+			<a href="https://github.com/cynic991/statelessvault" 
+				 >Andrea Guerini</a> is licensed under a 
+				 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+				 Creative Commons Attribution 4.0 International License</a><br>
+			<!-- Credits -->
+				Based on works by <a href="https://lhunath.com/">Marteen Billemont</a> and 
+													<a href="https://tomthorogood.uk/">Tom Thorogood</a>.
+				Please, before using Stateless Vault web application, read <a href="disclaimer.html">our disclaimer and privacy policy</a>.
+		</footer>
+		
+	</body>
