@@ -35,7 +35,7 @@ LIGHTNESS AND OFF-LINE USE
 Stateless Vault uses your Application Cache (AppCache) to run its web application offline. So Stateless Vault will be loaded and work correctly even if users click the refresh button when they are offline. There are some advantages: offline passwords recovering, speed and reduced server load. After your first connection to the web application, you'll be able to calculate your generated passwords every time you want on the same browser regardless you are online or offline.
 Stateless Vault is light because there are no personal data to store. In your Application Cache Stateless Vault will occupy no more than 300 KB. This is suitable even for device with small storage capacity.
 
-Moreover, you can also add this web application to your home screen, as a standalone web app. Discover how to do it. This is a easy way to access Stateless Vault directly from your smartphone or desktop without opening your browser, but this is not a real app. In this case you won't be able to access Stateless Vault offline. It's just a shortcut. Offline use works only on web browsers.
+Moreover, you can also add this web application to your home screen, as a standalone web app. Discover how to do it. This is a easy way to access Stateless Vault directly from your smartphone or desktop without opening your browser, but this is not a real app. It's just a shortcut, but it should guarentee off-line use also.
 
 CRYPTOGRAPHIC ALGORITHMS
 
