@@ -136,7 +136,7 @@ basic: [
 short: [
 "Cvcn",
 "NCnc",
-"xnCc",
+"cnCc",
 "mcCa"
 ],
 
