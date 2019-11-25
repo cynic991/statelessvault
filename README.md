@@ -2,7 +2,7 @@
 HTML5 password wallet
 
 Stateless Vault by Andrea Guerini is licensed under a Creative Commons Attribution 4.0 International License.
-This project is based on works by Marteen Billemont (https://github.com/tmthrgd/mpw-js) and Tom Thorogood (https://github.com/Lyndir/MasterPassword/tree/master/platform-independent/web-js). 
+This project is based on works by Maarten Billemont (https://github.com/tmthrgd/mpw-js) and Tom Thorogood (https://github.com/Lyndir/MasterPassword/tree/master/platform-independent/web-js). 
 This project was born for academic purposes and it was developed to accomplish Mobile and Web Programming course. Its author is a student of Computer and Network Security, Bachelor Level, University of Milan.
 
 Stateless Vault is a password wallet that generates passwords locally.
