@@ -401,10 +401,10 @@ USER.templates = {
   ],
   // 8 numbers
   pin8: [
-    "mNnmNnm",
-    "NnnmNnm",
-    "nmnNnNm",
-    "nnnnnnn"
+    "mNnmNnmn",
+    "NnnmNnnm",
+    "nmnNnnNm",
+    "nnnnnnnn"
   ],
 	phrase: [
 		"cvcc cvc cvccvcv cvc",
